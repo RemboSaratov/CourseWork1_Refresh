@@ -3,28 +3,33 @@ package pro.sky.CourseWorkRefresh;
 import java.util.Objects;
 
 public class Employee {
-    private String firstName;
-    private String secondName;
 
-    public Employee(String firstName, String secondName) {
+    private final String firstName;
+    private final String lastName;
+    private final int departmentId;
+    private final int salary;
+
+    public Employee(String firstName, String lastName, int departmentId, int salary) {
         this.firstName = firstName;
-        this.secondName = secondName;
+        this.lastName = lastName;
+        this.departmentId = departmentId;
+        this.salary = salary;
     }
 
     public String getFirstName() {
         return firstName;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
+    public String getLastName() {
+        return lastName;
     }
 
-    public String getSecondName() {
-        return secondName;
+    public int getDepartmentId() {
+        return departmentId;
     }
 
-    public void setSecondName(String secondName) {
-        this.secondName = secondName;
+    public int getSalary() {
+        return salary;
     }
 
     @Override public boolean equals(Object o) {
@@ -35,17 +40,20 @@ public class Employee {
             return false;
         }
         Employee employee = (Employee) o;
-        return Objects.equals(firstName, employee.firstName) && Objects.equals(secondName, employee.secondName);
+        return departmentId == employee.departmentId && salary == employee.salary && Objects.equals(firstName, employee.firstName) && Objects.equals(lastName, employee.lastName);
     }
 
     @Override public int hashCode() {
-        return Objects.hash(firstName, secondName);
+        return Objects.hash(firstName, lastName, departmentId, salary);
     }
 
     @Override public String toString() {
         return "Employee{" +
                 "firstName='" + firstName + '\'' +
-                ", secondName='" + secondName + '\'' +
+                ", secondName='" + lastName + '\'' +
+                ", departmentId=" + departmentId +
+                ", salary=" + salary +
                 '}';
     }
 }
+
