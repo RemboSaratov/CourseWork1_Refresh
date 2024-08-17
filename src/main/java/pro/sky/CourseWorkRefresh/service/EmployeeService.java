@@ -13,4 +13,6 @@ public interface EmployeeService {
     Employee getPerson(String firstName, String lastName, int departmentId, int salary);
 
     Collection <Employee> findAll();
+
+    void checkName(String firstName, String lastName);
 }

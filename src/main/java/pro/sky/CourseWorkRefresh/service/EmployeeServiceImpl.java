@@ -7,13 +7,15 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 import pro.sky.CourseWorkRefresh.Employee;
 import pro.sky.CourseWorkRefresh.exeption.EmployeeAlreadyAddedException;
+import pro.sky.CourseWorkRefresh.exeption.EmployeeCheckNameExeption;
 import pro.sky.CourseWorkRefresh.exeption.EmployeeNotFoundException;
 import pro.sky.CourseWorkRefresh.exeption.EmployeeStorageIsFullException;
+import org.apache.commons.lang3.StringUtils;
 
 @Service
     public class EmployeeServiceImpl implements EmployeeService {
 
-    public static final Integer max_employee = 5;
+    public static final Integer max_employee = 10;
     List<Employee> employees = new ArrayList<>(List.of(
             new Employee("Anton", "Petrov", 1, 25000),
             new Employee("Anna", "Sedocova", 2, 40000),
@@ -34,13 +36,21 @@ import pro.sky.CourseWorkRefresh.exeption.EmployeeStorageIsFullException;
             if (employees.contains(person)) {
                 throw new EmployeeAlreadyAddedException();
             }
-            employees.add(new Employee(firstName, lastName, departmentId, salary));
+            StringUtils.capitalize(firstName);
+            StringUtils.capitalize(lastName);
+            employees.add(new Employee(StringUtils.capitalize(firstName),
+                                       StringUtils.capitalize(lastName),
+                                       departmentId,
+                                       salary));
             return person;
         }
 
         @Override
         public Employee removePerson(String firstName, String lastName, int departmentId, int salary) {
-            Employee person = new Employee(firstName, lastName, departmentId, salary );
+            Employee person = new Employee(StringUtils.capitalize(firstName),
+                                           StringUtils.capitalize(lastName),
+                                           departmentId,
+                                           salary);
             if (employees.contains(person)) {
                 employees.remove(person);
                 return person;
@@ -50,7 +60,10 @@ import pro.sky.CourseWorkRefresh.exeption.EmployeeStorageIsFullException;
 
         @Override
         public Employee getPerson(String firstName, String lastName, int departmentId, int salary) {
-            Employee person = new Employee(firstName, lastName, departmentId, salary);
+            Employee person = new Employee(StringUtils.capitalize(firstName),
+                                           StringUtils.capitalize(lastName),
+                                           departmentId,
+                                           salary);
             if (employees.contains(person)) {
                 return person;
             }
@@ -60,5 +73,11 @@ import pro.sky.CourseWorkRefresh.exeption.EmployeeStorageIsFullException;
     @Override
     public Collection<Employee> findAll() {
         return Collections.unmodifiableList(employees);
+    }
+
+    public void checkName(String firstName, String lastName) {
+        if (!StringUtils.isAlpha(firstName) || !StringUtils.isAlpha(lastName)) {
+            throw new EmployeeCheckNameExeption();
+        }
     }
 }
