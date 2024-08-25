@@ -27,6 +27,7 @@ public class EmployeeController {
                                @RequestParam String lastName,
                                @RequestParam int departmentId,
                                @RequestParam int salary) {
+        employeeService.checkName(firstName, lastName);
         return employeeService.addPerson(firstName, lastName, departmentId, salary);
     }
 
@@ -35,6 +36,7 @@ public class EmployeeController {
                                   @RequestParam String lastName,
                                   @RequestParam int departmentId,
                                   @RequestParam int salary) {
+        employeeService.checkName(firstName, lastName);
         return employeeService.removePerson(firstName, lastName, departmentId, salary);
     }
 
@@ -43,6 +45,7 @@ public class EmployeeController {
                               @RequestParam String lastName,
                               @RequestParam int departmentId,
                               @RequestParam int salary) {
+        employeeService.checkName(firstName, lastName);
         return employeeService.getPerson(firstName, lastName, departmentId, salary);
     }
 
