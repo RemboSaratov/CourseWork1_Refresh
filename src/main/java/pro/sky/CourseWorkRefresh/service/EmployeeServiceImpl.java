@@ -10,25 +10,21 @@ import pro.sky.CourseWorkRefresh.exeption.EmployeeAlreadyAddedException;
 import pro.sky.CourseWorkRefresh.exeption.EmployeeNotFoundException;
 import pro.sky.CourseWorkRefresh.exeption.EmployeeStorageIsFullException;
 
-@Service
+    @Service
     public class EmployeeServiceImpl implements EmployeeService {
 
-    public static final Integer max_employee = 5;
-    List<Employee> employees = new ArrayList<>(List.of(
-            new Employee("Anton", "Petrov", 1, 25000),
-            new Employee("Anna", "Sedocova", 2, 40000),
-            new Employee("Igor", "Corolev", 3, 15000),
-            new Employee("Olga", "Topol", 4, 10000),
-            new Employee("Oleg", "Ivanov", 1 , 40000)
+    public static final Integer MAX_EMPLOYEE = 5;
+        List<Employee> employees = new ArrayList<>(List.of(
+                new Employee("Anton", "Petrov", 1, 25000),
+                new Employee("Anna", "Sedocova", 2, 40000)));
 
-    ));
 
 
         @Override
         public Employee addPerson(String firstName, String lastName, int departmentId, int salary) {
             Employee person = new Employee(firstName, lastName, departmentId, salary);
             System.out.println(employees.size());
-                if (employees.size() >= max_employee) {
+                if (employees.size() >= MAX_EMPLOYEE) {
                     throw new EmployeeStorageIsFullException("В список больше нельзя добавить нового сотрудника");
                 }
             if (employees.contains(person)) {

@@ -4,13 +4,13 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import pro.sky.CourseWorkRefresh.service.DepartmentService;
 
 @RestController
-@RequestMapping("/departments")
+@RequestMapping("/department")
 
 public class DepartmentController {
 
@@ -20,19 +20,23 @@ public class DepartmentController {
         this.departmentService = departmentService;
     }
 
-    @GetMapping("/max-salary")
-    public Employee maxSalary(@RequestParam int departmentId) {
-        return departmentService.getMaxSalary(departmentId);
+    @GetMapping("/{id}/salary/sum")
+    public int sumSalary(@PathVariable int id) {
+        return departmentService.getSumSalaryByDepartment(id);
     }
-    @GetMapping("/min-salary")
-    public Employee minSalary(@RequestParam int departmentId) {
-        return departmentService.getMinSalary(departmentId);
+    @GetMapping("/{id}/salary/max")
+    public Employee maxSalary(@PathVariable int id) {
+        return departmentService.getMaxSalary(id);
     }
-    @GetMapping(value = "/all", params = "departmentId")
-    public Collection<Employee> getByDepartment(@RequestParam int departmentId) {
-        return departmentService.getByDepartment(departmentId);
+    @GetMapping("/{id}/salary/min")
+    public Employee minSalary(@PathVariable int id) {
+        return departmentService.getMinSalary(id);
     }
-    @GetMapping("/all")
+    @GetMapping(value = "/{id}/employees", params = "id")
+    public Collection<Employee> getByDepartment(@PathVariable int id) {
+        return departmentService.getByDepartment(id);
+    }
+    @GetMapping("/employees")
     public Map<Integer, List<Employee>> groupByDepartment() {
         return departmentService.groupByDepartment();
     }

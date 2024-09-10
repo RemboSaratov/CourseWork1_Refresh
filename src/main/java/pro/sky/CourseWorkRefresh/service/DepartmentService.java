@@ -4,7 +4,9 @@ import java.util.Collection;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 import org.springframework.stereotype.Service;
 import pro.sky.CourseWorkRefresh.Employee;
 
@@ -28,6 +30,14 @@ public class DepartmentService {
                               .filter(employee -> departmentId == employee.getDepartmentId())
                               .min(Comparator.comparingInt(employee -> employee.getSalary()))
                               .orElseThrow(() -> new RuntimeException("Не верно введенный ID"));
+    }
+
+    public int getSumSalaryByDepartment(int departmentId) {
+        return employeeService.findAll().stream()
+                              .filter(employee -> departmentId == employee.getDepartmentId())
+                              .mapToInt(Employee::getSalary).sum();
+
+
     }
 
     public Collection<Employee> getByDepartment(int departmentId) {
